@@ -4,12 +4,19 @@ import burgerCss from './Burger.css';
 
 const burger = (props) => {
 
-    const transformedIngredient = Object.keys(props.ingredientProps).map(idIngredient => {
+    let transformedIngredient = Object.keys(props.ingredientProps)
+    .map(idIngredient => {
         return [...Array(props.ingredientProps[idIngredient])].map((_, index) => {
             return <BurgerIngredient key={idIngredient + index} type={idIngredient}/>;
         })
-    });
+    }).reduce((arr, el) => {
+        return arr.concat(el)
+    }, []);
 
+    if(transformedIngredient.length === 0) {
+        transformedIngredient = <p>Please select a Ingredient !</p>;
+    }
+    console.log(transformedIngredient)
     return (
         <div className={burgerCss.Burger}>
             <BurgerIngredient type="bread-top" />
